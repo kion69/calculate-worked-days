@@ -9,7 +9,7 @@ interface DateInput {
     BeginWork: string,
     DateGrid: string,
     EndWork: string,
-    ID: [],
+    ID: number,
     LunchEndTime: string,
     LunchStartTime: string,
     TaskAmountMinutes: number,
@@ -27,7 +27,7 @@ const style = {
 
 const months = ['Janeiro', 'Feveveiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outbro', 'Novembro', 'Dezembro'];
 
-function Home(props: any) {
+function Home() {
 
     const [dateValue, setDateValue] = useState<DateInput[]>([]);
     const [selectedMonth, setSelectedMonth] = useState(-1);
