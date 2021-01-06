@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import { Container, MainContainer, Button } from './style';
+import { Container, MainContainer, ButtonStyled } from './style';
 import Table from './Table';
 import moment from 'moment';
 import { Router, Route, Switch } from 'react-router';
@@ -61,9 +61,9 @@ function App() {
           <label htmlFor='textArea'>Json</label>
           <textarea name='textArea' ref={textAreaReference} />
 
-          <Button size={16} onClick={() => calculateDate()}>
+          <ButtonStyled fontSize={16} onClick={() => calculateDate()}>
             Calcular
-        </Button>
+        </ButtonStyled>
 
         </Container>
       </Container>

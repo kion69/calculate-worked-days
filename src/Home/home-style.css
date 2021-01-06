@@ -1,0 +1,73 @@
+/* Testing file , just to learn animation with  react-transiction*/
+
+
+.tooltip {
+    opacity: 0;
+    background-color: #5e5e5e;
+    position: absolute;
+    padding: 5px;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.2);
+    color: white;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.tooltip.left {
+    transform: translate(calc(-100% - 10px), calc(-100% - 0px));
+}
+
+.tooltip.top {
+    /* transform: translate(calc(-100% + 40px), calc(-100px)); */
+    bottom: 0;
+    right: 0;
+    transform: translateY(calc(-100% - 60px));
+}
+
+.tooltip.right {
+    transform: translate(calc(100%), calc(0px - 100%))
+}
+
+.tooltip.bottom {
+    right: 0;
+    bottom: 0;
+    transform: translateY(50px);
+}
+
+.tooltip.left::after {
+    right: 0;
+    bottom: 0;
+    transform: translateY(50px);
+}
+
+.fade-enter {
+    opacity: 0;
+    transition-delay: 0.9s;
+    transition: 0.5s;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: 0.5s;
+    transition-delay: 0.9s;
+}
+
+.fade-enter-done {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit-active {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit-done {
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0.9s;
+}

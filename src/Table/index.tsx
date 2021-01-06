@@ -34,14 +34,14 @@ function Table(props: any) {
   const [tableDateInput, setTableDateInput] = useState<DateInput[]>([]);
   const [positiveWorkedHours, setPositiveWorkedHours] = useState(0);
   const [negativeWorkedHours, setNegativeWorkedHours] = useState(0);
-  const [startDate] = useState();
-  const [endDate] = useState();
+  // const [startDate] = useState();
+  // const [endDate] = useState();
   const [workedDays, setWorkedDays] = useState(0);
 
 
   useEffect(() => {
     console.log(props.dateTimeJson);
-    setTableDateInput(createTable(props.dateTimeJson, props.monthSelected));
+    setTableDateInput(createTable(props.dateTimeJson, props.selectedMonth, props.selectedYear));
     calculateMinutes(props.dateTimeJson);
   }, [props]);
 
@@ -61,9 +61,9 @@ function Table(props: any) {
     setNegativeWorkedHours(negativeMinutes);
   };
 
-  function createTable(datesInputed: DateInput[], monthSelected: number) {
+  function createTable(datesInputed: DateInput[], selectedMonth: number, selectedYear: number) {
 
-    var startDate = moment(`01/${monthSelected + 1}/2020`, 'DD/MM/YYYY');
+    var startDate = moment(`01/${selectedMonth + 1}/${selectedYear}`, 'DD/MM/YYYY');
     var endDate = moment(startDate, 'DD/MM/YYYY').endOf('month');
 
     let day = startDate.date();
@@ -200,12 +200,6 @@ function Table(props: any) {
           </ContainerTimeInfo>
         </Container>
       }
-
-
-      {startDate}
-      <br />
-      {endDate}
-
     </MainContainer>
   );
 }

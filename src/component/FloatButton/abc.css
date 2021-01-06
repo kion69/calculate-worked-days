@@ -1,0 +1,37 @@
+.invisivel {
+    opacity: 0;
+}
+
+.fade-enter {
+    opacity: 0;
+    transition-delay: 1.3s;
+    transition: 0.5s;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: 0.5s;
+    transition-delay: 1.3s;
+
+}
+
+.fade-enter-done {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit-active {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.fade-exit-done {
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 1.3s;
+}
