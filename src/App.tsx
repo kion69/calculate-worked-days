@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { Container, MainContainer, ButtonStyled } from './style';
-import Table from './Table';
+import Table from './component/Table';
 import moment from 'moment';
 import { Router, Route, Switch } from 'react-router';
 

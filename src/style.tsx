@@ -126,6 +126,7 @@ export const ButtonStyled = styled(Button) <{ fontSize: number }>`
 export const FabStyled = styled(Fab) <{ fontSize: number }>`
   ${buttonColor}
 
+  z-index: 1;
   position: fixed;
   bottom: 25px;
   right: 25px;

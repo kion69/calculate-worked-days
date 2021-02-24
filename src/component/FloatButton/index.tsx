@@ -13,30 +13,11 @@ export const NormalButton = styled(ButtonStyled)`
     color: white;
     margin: 10px 30px;
     min-width: fit-content;
+    padding: 0;
 
      &:hover {
         background-color:transparent;   
-    }
-
-   /* &:hover .tooltip {
-        opacity: 1;
-        transition: opacity .5s;
-        transition-delay: 1.3s;
-    }
-
-    .tooltip.left {
-        top: 10%;
-        left: 100%;
-        transform: translateX(calc(-100% - 80px));
-    }
-
-    .tooltip.right {
-        background-color: purple;
-        top: 90px;
-        left: 0;
-        transform: translateX(calc(-100% - 30px));
-    } */
-    
+    }    
 `;
 
 export const Tooltip2 = styled.div`
@@ -94,7 +75,7 @@ function Button(props: ButtonProps) {
         if (props.float) {
             return (
                 <Tooltip title={props.tooltipMsg} enterDelay={900} leaveDelay={900}>
-                    <FloatButton fontSize={15} size={'medium'} onClick={props.func}>
+                    <FloatButton key={0} fontSize={15} size={'medium'} onClick={props.func}>
                         {renderIcon()}
                     </FloatButton>
                 </Tooltip>
@@ -103,7 +84,7 @@ function Button(props: ButtonProps) {
         } else {
             return (
                 <Tooltip title={props.tooltipMsg} enterDelay={900} leaveDelay={900}>
-                    <NormalButton disableRipple fontSize={15} onClick={props.func}>
+                    <NormalButton key={1} disableRipple fontSize={15} onClick={props.func}>
                         {renderIcon()}
                     </NormalButton>
                 </Tooltip>

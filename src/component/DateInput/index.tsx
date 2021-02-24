@@ -1,9 +1,12 @@
 import moment from "moment";
-import React, { useState, useRef, useCallback } from "react";
-import { DateInput } from "../../Home";
+import React, { useState, useRef, useCallback, useEffect, createRef, FormEvent } from "react";
 import { MainContainer, Container, ButtonStyled } from "../../style";
-import Table from "../../Table";
+import Table from "../Table";
 import Button from "../FloatButton";
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { setTotalMinutesWorked } from '../../store/actionCreator';
+import { IDateInput } from "../../interfaces/date-input";
 
 const style = {
     spacing: {
@@ -22,36 +25,32 @@ const months = ['Janeiro', 'Feveveiro', 'Março', 'Abril', 'Maio', 'Junho', 'Jul
 
 function DateInputForm(props: any) {
 
-    const [dateValue, setDateValue] = useState<DateInput[]>([]);
+    const [dateValue, setDateValue] = useState<IDateInput[]>([]);
     const [selectedMonth, setSelectedMonth] = useState(-1);
-    const [selectedYear, setSelectedYear] = useState(0);
+    const [selectedYear, setSelectedYear] = useState<number | null>(null);
+    // const [tableIndex, setTableIndex] = useState<number>(-1);
 
     const textAreaReference = useRef<any>();
+    const botaozinho = useRef<any>();
 
     function calculateDate() {
-
-        let parsedDate: DateInput[];
+        let parsedDate: IDateInput[];
         let date = null;
 
         try {
             parsedDate = JSON.parse(textAreaReference.current.value).timesheetgrid;
-            const detectMonth = parsedDate.find((x: DateInput) => x.DateGrid);
+            const detectMonth = parsedDate.find((x: IDateInput) => x.DateGrid);
             const month = moment(detectMonth?.DateGrid, 'DD/MM/YYYY').month();
             const year = moment(detectMonth?.DateGrid, 'DD/MM/YYYY').year();
             setSelectedMonth(month);
             setSelectedYear(year);
             date = parsedDate;
-            const filteredList = date.filter((item: DateInput) => item.AmountMinutes > 0);
+            const filteredList = date.filter((item: IDateInput) => item.AmountMinutes > 0);
             setDateValue(filteredList);
         } catch (ex) {
             console.log(ex)
         }
     }
-
-    const deleteTable = useCallback(
-        () => {
-            console.log('legal')
-        }, []);
 
     return (
         <MainContainer orientation={'row'} style={style.borderBottom}>
@@ -59,19 +58,19 @@ function DateInputForm(props: any) {
 
                 <Container orientation={'row'} style={style.center}>
 
-                    <Container orientation={'column'} style={{ ...style.spacing, alignSelf: 'flex-end' }}>
-
-                        <label>Ano {selectedYear !== 0 && selectedYear}</label>
-                        <label>Mês</label>
-                        <select disabled value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))} style={{ fontSize: '15pt', order: 1 }}>
-                            <option value={-1}></option>
-                            {months.map((month, index) => <option value={index} key={index}>{month}</option>)};
-                        </select>
+                    <Container orientation={'column'} style={{ ...style.spacing }}>
+                        <label>{selectedYear && `${months[selectedMonth]}/${selectedYear}`}</label>
                     </Container>
 
                     <Container orientation={'column'} style={{ ...style.spacing, alignSelf: 'flex-end' }}>
                         <label htmlFor='textArea'>Json</label>
-                        <textarea name='textArea' ref={textAreaReference} autoComplete={'false'} />
+                        <textarea name='textArea' ref={textAreaReference} autoComplete={'false'}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    calculateDate();
+                                };
+                            }} />
                     </Container>
 
                     <Container orientation={'column'} style={{ ...style.spacing, alignSelf: 'flex-end' }}>
@@ -85,6 +84,7 @@ function DateInputForm(props: any) {
                     dateTimeJson={dateValue}
                     selectedMonth={selectedMonth}
                     selectedYear={selectedYear}
+                    tableIndex={props.id}
                 />
             </MainContainer>
             <Container orientation={'row'} style={{ alignSelf: 'flex-start' }}>
@@ -92,7 +92,7 @@ function DateInputForm(props: any) {
                     iconName={'FiMinusCircle'}
                     iconSize={20}
                     tooltipMsg={'Excluir'}
-                    func={() => deleteTable()}
+                    func={() => props.removeTable(props.id)}
                 />
             </Container>
         </MainContainer>

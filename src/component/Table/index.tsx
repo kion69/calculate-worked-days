@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { MainContainer, Container, darkColor, Text, Divider } from '../style';
+import React, { Dispatch, useEffect, useState } from 'react';
+import { MainContainer, Container, darkColor, Text, Divider } from '../../style';
 import { ContainerFullWidth, ContainerTableScrollable, ContainerTimeInfo, TableRow } from './table-style';
 import { FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { setTotalMinutesWorked } from '../../store/actionCreator';
 
 interface DateInput {
   AmountMinutes: number;
@@ -34,15 +36,20 @@ function Table(props: any) {
   const [tableDateInput, setTableDateInput] = useState<DateInput[]>([]);
   const [positiveWorkedHours, setPositiveWorkedHours] = useState(0);
   const [negativeWorkedHours, setNegativeWorkedHours] = useState(0);
+  const [totalWorkedInMonth, setTotalWorkedInMonth] = useState(0);
   // const [startDate] = useState();
   // const [endDate] = useState();
   const [workedDays, setWorkedDays] = useState(0);
+  const dispatch: Dispatch<any> = useDispatch()
 
+  const hoursPerDay = 8;
+  const minutes = 60;
+  const totalWorkedInDays = workedDays * hoursPerDay * minutes;
 
   useEffect(() => {
     console.log(props.dateTimeJson);
-    setTableDateInput(createTable(props.dateTimeJson, props.selectedMonth, props.selectedYear));
     calculateMinutes(props.dateTimeJson);
+    setTableDateInput(createTable(props.dateTimeJson, props.selectedMonth, props.selectedYear));
   }, [props]);
 
   function calculateMinutes(datesInputed: DateInput[]) {
@@ -59,6 +66,10 @@ function Table(props: any) {
 
     setPositiveWorkedHours(positiveMinutes);
     setNegativeWorkedHours(negativeMinutes);
+    dispatch(setTotalMinutesWorked({
+      index: props.tableIndex,
+      totalMinutes: positiveMinutes
+    }))
   };
 
   function createTable(datesInputed: DateInput[], selectedMonth: number, selectedYear: number) {
@@ -104,6 +115,8 @@ function Table(props: any) {
     }
 
     setWorkedDays(tableDate.filter(x => x.EndWork).length);
+    setTotalWorkedInMonth((positiveWorkedHours + negativeWorkedHours) - totalWorkedInDays);
+
     return tableDate;
   }
 
@@ -123,14 +136,13 @@ function Table(props: any) {
   }
 
   function calculateHour() {
-
-    const result = ((positiveWorkedHours + negativeWorkedHours) - workedDays * 8 * 60) / 60;
+    const result = ((positiveWorkedHours + negativeWorkedHours) - totalWorkedInDays) / minutes;
     return result.toFixed(2);
   }
 
   return (
     <MainContainer orientation={'column'} style={{ justifyContent: 'space-evenly' }}>
-      
+
       {tableDateInput.length > 0 &&
         <Container orientation={'row'}>
           <ContainerTableScrollable>
@@ -169,7 +181,6 @@ function Table(props: any) {
             </table>
           </ContainerTableScrollable>
 
-          {/* <Container orientation={'column'} style={{ margin: 'unset' }}> */}
           <ContainerTimeInfo orientation={'row'}>
             <ContainerFullWidth>
               <div style={style.timeInfo}>
@@ -178,7 +189,7 @@ function Table(props: any) {
               <Divider />
               <div style={style.timeInfo}>
                 <Text>Minutos totais: </Text>
-                <Text>{workedDays * 8 * 60}</Text>
+                <Text>{totalWorkedInDays}</Text>
               </div>
               <div style={style.timeInfo}>
                 <Text>Minutos positivas: </Text>
@@ -190,7 +201,7 @@ function Table(props: any) {
               </div>
               <div style={style.timeInfo}>
                 <Text>Saldo(minutos): </Text>
-                <Text>{(positiveWorkedHours + negativeWorkedHours) - workedDays * 8 * 60}</Text>
+                <Text>{totalWorkedInMonth}</Text>
               </div>
               <div style={style.timeInfo}>
                 <Text>Saldo(horas): </Text>

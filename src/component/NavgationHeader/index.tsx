@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Switch, Redirect, Route } from 'react-router-dom';
-import Calculator from '../../Calculator';
-import Home from '../../Home';
+import Calculator from '../../pages/Calculator';
+import Home from '../../pages/Home';
 import { ActiveLink, NavigationBar, yellow } from '../../style';
 import { TotalCountHour } from '../TotalCountHour';
 

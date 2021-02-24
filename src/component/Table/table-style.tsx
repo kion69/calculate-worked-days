@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { redColor, darkColor, MainContainer } from '../style';
+import { redColor, darkColor, MainContainer } from '../../style';
 
 
 export const TableRow = styled.tr<{ amount: number }>`
