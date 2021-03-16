@@ -1,34 +1,37 @@
 import * as actionTypes from "./action"
 
 
-const initialState: DateInputState = {
+const initialState: GenericState = {
     dateInput: {
         index: -1,
         totalMinutes: 0
     }
 };
 
+
+
 const reducer = (
-    state: DateInputState = initialState,
-    action: DateInputAction
-): DateInputState => {
+    state: GenericState = initialState,
+    action: GenericAction
+): GenericState => {
+
     switch (action.type) {
         case actionTypes.ADD_DATEINPUT:
             return {
                 ...state,
                 dateInput: {
-                    index: action.dateInput.index,
-                    totalMinutes: action.dateInput.totalMinutes
+                    index: action.action.index,
+                    totalMinutes: action.action.totalMinutes
                 }
             }
 
         case actionTypes.REMOVE_DATEINPUT:
             return {
-                ...state,
-                dateInput: {
-                    index: action.dateInput.index,
-                    totalMinutes: action.dateInput.totalMinutes
-                }
+                // ...state,
+                // dateInput: {
+                //     index: action.dateInput.index,
+                //     totalMinutes: action.dateInput.totalMinutes
+                // }
             }
     }
     return state

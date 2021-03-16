@@ -1,23 +1,24 @@
 import * as actionTypes from "./action";
 
-export function setTotalMinutesWorked(dateInput: IDateInput) {
-    const action: DateInputAction = {
+export function setTotalMinutesWorked(dateInput: IGeneric) {
+
+    const action: GenericAction = {
         type: actionTypes.ADD_DATEINPUT,
-        dateInput
+        action: dateInput
     }
     return dispatchEvent(action)
 }
 
-// export function removeNumber(dateInput: IDateInput) {
+// export function removeNumber(index: number) {
 //     const action: DateInputAction = {
 //         type: actionTypes.REMOVE_DATEINPUT,
-//         dateInput
+//         action: index
 //     }
 //     return dispatchEvent(action)
 // }
 
-function dispatchEvent(action: DateInputAction) {
-    return (dispatch: DispatchType) => {
+function dispatchEvent(action: GenericAction) {
+    return (dispatch: GenericDispatchType) => {
         dispatch(action)
     }
 }

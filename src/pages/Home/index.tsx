@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { setTotalMinutesWorked } from '../../store/actionCreator';
 import { ButtonStyled } from '../../style';
+import { REMOVE_DATEINPUT } from '../../store/action';
 
 const style = {
     spacing: {
@@ -48,6 +49,7 @@ function Home(props: any) {
             renderForm.splice(indexInRow, 1);
             console.log(renderForm);
             setRenderForm([...renderForm]);
+            dispatch(REMOVE_DATEINPUT)
         };
 
     return (

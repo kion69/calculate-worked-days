@@ -49,8 +49,8 @@ function Table(props: any) {
   useEffect(() => {
     console.log(props.dateTimeJson);
     calculateMinutes(props.dateTimeJson);
-    setTableDateInput(createTable(props.dateTimeJson, props.selectedMonth, props.selectedYear));
-  }, [props]);
+    createTable(props.dateTimeJson, props.selectedMonth, props.selectedYear);
+  }, [props, positiveWorkedHours, negativeWorkedHours]);
 
   function calculateMinutes(datesInputed: DateInput[]) {
 
@@ -109,15 +109,14 @@ function Table(props: any) {
           if (date.DateGrid === outraData.DateGrid) {
             return Object.assign(outraData, date);
           }
-          return null;
+          setTableDateInput([]);
         });
       });
     }
 
     setWorkedDays(tableDate.filter(x => x.EndWork).length);
     setTotalWorkedInMonth((positiveWorkedHours + negativeWorkedHours) - totalWorkedInDays);
-
-    return tableDate;
+    setTableDateInput(tableDate);
   }
 
   const formatTime = (date: string) => {

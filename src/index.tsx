@@ -11,8 +11,8 @@ import reducer from './store/reducer';
 import thunk from 'redux-thunk';
 
 
-const store: Store<DateInputState, DateInputAction> & {
-  dispatch: DispatchType
+const store: Store<GenericState, GenericAction> & {
+  dispatch: GenericDispatchType
 } = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
